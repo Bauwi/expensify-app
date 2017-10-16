@@ -52,5 +52,6 @@
   },
   "devDependencies": {
     "prettier": "^1.7.4"
-  }
+  },
+  "repository": "git@github.com:Bauwi/expensify-app.git"
 }
