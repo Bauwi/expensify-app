@@ -11,8 +11,6 @@ exports[`should render ExpenseListItem with expense 1`] = `
     </h3>
   </Link>
   <p>
-    am: 
-    195
     Amount: 
     $1.95
      // Created At: 
