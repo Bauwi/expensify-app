@@ -40,3 +40,30 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 })
+
+    // SET_EXPENSES
+export const setExpenses = (expenses) => ({
+  type: 'SET_EXPENSES',
+  expenses
+});
+
+export const startSetExpenses = () => {
+  // Manage async using thunk
+  return (dispatch) => {
+    //fetch data in 'expenses'
+    return database.ref('expenses')
+      .once('value')
+      // then parse data in an array
+      .then(snapshot => {
+        const expenses = [];
+        snapshot.forEach((childSnapshot) => {
+          expenses.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+        // finally, use the parsed data in a dispatch call to update state
+        dispatch(setExpenses(expenses));
+      });
+  };
+};
