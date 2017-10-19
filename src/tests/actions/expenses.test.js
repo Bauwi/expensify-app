@@ -1,6 +1,15 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddExpense, addExpense, removeExpense, editExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
+import { 
+  startAddExpense,
+  addExpense,
+  removeExpense,
+  editExpense, 
+  setExpenses,
+  startSetExpenses,
+  startRemoveExpense,
+  startEditExpense
+} from '../../actions/expenses';
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase';
 
@@ -23,6 +32,22 @@ test('should setup remove expense action object', () => {
   })
 });
 
+test('should remove expense from firebase', (done) => {
+  const store = createMockStore();
+  const id = expenses[0].id;
+  store.dispatch(startRemoveExpense({ id })).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'REMOVE_EXPENSE',
+      id
+    });
+    return database.ref(`expenses/${id}`).once('value');
+  }).then((snapshot) =>{
+    expect(snapshot.val()).toBeFalsy();
+    done();    
+  });
+});
+
 test('should setup edit expense action object', () => {
   const action = editExpense('123abc', { note: 'just for testing' });
 
@@ -33,6 +58,31 @@ test('should setup edit expense action object', () => {
   })
 })
 
+test('should edit expense from firebase', (done) => {
+  const store = createMockStore();
+  const updateData = {
+    description: 'new description'
+  }
+  store.dispatch(startEditExpense(expenses[1].id, updateData))
+  .then( () => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'EDIT_EXPENSE',
+      id: expenses[1].id,
+      updates: updateData
+    });
+    return database.ref(`expenses/${expenses[1].id}`).once('value');
+  }).then((snapshot) => {
+    const {amount, createdAt, description, note} = snapshot.val()
+    expect(snapshot.val()).toEqual({
+      description,
+      amount,
+      createdAt,
+      note
+    });
+    done();
+  })
+});
 
 test('should setup add expense action object with provided values', () => {
   const action = addExpense(expenses[2]);
@@ -112,3 +162,6 @@ test('should fetch the expenses from firebase', (done) => {
     done();
   });
 });
+
+
+
