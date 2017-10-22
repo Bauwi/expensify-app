@@ -16,10 +16,22 @@ exports[`should render LoginPage correctly 1`] = `
       Manage your expenses.
     </p>
     <button
-      className="button"
+      className="button button--login"
       onClick={[Function]}
     >
-      Login With Google
+      <i
+        className="fa fa-google"
+      />
+       Login With Google
+    </button>
+    <button
+      className="button button--login"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-github"
+      />
+       Login With GitHub
     </button>
   </div>
 </div>
