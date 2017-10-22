@@ -36,6 +36,11 @@ exports[`should render EditExpensePage correctly 1`] = `
     >
       Remove Expense
     </button>
+    <withRouter(Connect(RemoveExpenseModal))
+      handleModalClose={[Function]}
+      id="2"
+      isOpen={false}
+    />
   </div>
 </div>
 `;

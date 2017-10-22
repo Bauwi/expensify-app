@@ -24,3 +24,14 @@
 .button--secondary {
   background: #888888;
 }
+
+.button--danger {
+  transition: background .3s ease;
+  &:hover {
+    background: red;
+  }
+}
+
+.button--aside:nth-child(even) {
+  margin-left: $s-size;
+}
