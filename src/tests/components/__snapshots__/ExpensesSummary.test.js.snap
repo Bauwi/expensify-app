@@ -24,9 +24,10 @@ exports[`should render ExpenseSummary correctly with multiple expenses 1`] = `
     <h3
       className="page-header__subtitle"
     >
-      Total: 
-      <span />
-       
+      <span>
+        7
+      </span>
+       hidden 
       expenses
     </h3>
     <div
@@ -68,10 +69,11 @@ exports[`should render ExpenseSummary correctly with one expense 1`] = `
     <h3
       className="page-header__subtitle"
     >
-      Total: 
-      <span />
-       
-      expense
+      <span>
+        2
+      </span>
+       hidden 
+      expenses
     </h3>
     <div
       className="page-header__actions"

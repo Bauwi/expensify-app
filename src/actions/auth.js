@@ -8,7 +8,6 @@ export const login = (uid) => ({
 export const startLogin = (socialLogin) => {
   return () => {
     const provider = socialLogin === 'google' ? googleAuthProvider : githubAuthProvider
-    console.log(provider)
     return firebase.auth().signInWithPopup(provider);
   };
 };

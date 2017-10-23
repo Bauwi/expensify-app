@@ -6,14 +6,15 @@ import selectExpensesTotalAmount from '../selectors/expenses-total';
 import selectExpensesCount from '../selectors/expenses-count';
 import numeral from 'numeral';
 
-export const ExpensesSummary = ({expenses, expenseCount, expensesTotalAmount}) => {
+export const ExpensesSummary = ({expensesTotalCount, expenseCount, expensesTotalAmount}) => {
   const expensesWord = expenseCount <= 1 ? "expense" : 'expenses';
+  const expensesWordHidden = expensesTotalCount - expenseCount <= 1 ? "expense" : 'expenses';
   const formattedExpensesTotalAmount = numeral(expensesTotalAmount / 100).format('$0,0.00');
   return (
     <div className="page-header">
       <div className="content-container">
         <h1 className="page-header__title">Viewing <span>{expenseCount}</span> {expensesWord} totalling <span>{formattedExpensesTotalAmount}</span></h1>    
-        <h3 className="page-header__subtitle">Total: <span>{expenses}</span> {expensesWord}</h3>
+        <h3 className="page-header__subtitle"><span>{expensesTotalCount - expenseCount}</span> hidden {expensesWordHidden}</h3>
         <div className="page-header__actions">
           <Link className="button" to="/create">Add Expense</Link>
         </div>
@@ -24,7 +25,7 @@ export const ExpensesSummary = ({expenses, expenseCount, expensesTotalAmount}) =
 
 const mapStateToProps = (state) => {
   return {
-    expenses: selectExpensesCount(state.expenses),
+    expensesTotalCount: selectExpensesCount(state.expenses),
     expenseCount: (selectExpenses(state.expenses, state.filters)).length,
     expensesTotalAmount: selectExpensesTotalAmount(selectExpenses(state.expenses, state.filters))
   }
